@@ -13,7 +13,7 @@ If the service fails to obtain weather details from the priamry source it fails 
 `httputil` handles the actual writing of the response via `http.ResponseWriter`.
 `WeatherService` does bulk of the work of making request to the weather providers and parsing/transforming the response to desired format represented by `WeatherDetails` struct.
 
-## What could have been done better
+### What could have been done better
 I hate to use time as an excuse but given an extra few hours or so, I would imrovise the current design and implementation with the following:
 
 - The configuration can be agnostic of the number of sources and the sources can be specifed in an array without having to name them as primary and seconday
@@ -21,6 +21,8 @@ I hate to use time as an excuse but given an extra few hours or so, I would imro
 - API Keys and APP IDs should never be stored in config. If this was hosted in cloud(assuming AWS as the default service provider, deally as a serverless app, nonetheless if it was hosted inside an ECS container) it would be stored in secrets manager (i prefer it over system manager's parameter store) or injected as environment variable for non-cloud deplyments.
 - Separate out extracting the weather details into `WeatherDetails` struct implementation into a service and ideally that service would ensure that the response from the weather information providers/sources conform to a JSON schema. I have been reading about PACT a lot, so this would be perfect place to use PACT based contract testing.
 - I would have liked to have some integration tests to make sure that what has been sent out by the service conforms to our JSON schema and also what comes in conforms as well.
+- Logging and error handling can be improved by passing context and using context logger whereever necessary.
+  The downstream API errors can be handled better and then transformed to more meaningful errors but having said that, this is   not an API, it's a service.
 
 # Prerequisites
 - Make sure you have installed the latest version of Golang from https://golang.org/

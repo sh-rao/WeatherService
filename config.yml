@@ -1,0 +1,16 @@
+primaryWeatherProvider:
+  baseUrl: "http://api.weatherstack.com/current"
+  city: "Melbourne"
+  unit: "m"
+  accessKey: "4d1d7c19b36512ec85e780b83a3f9c36"
+  primary: true
+
+secondaryWeatherProvider:
+  baseUrl: "http://api.openweathermap.org/data/2.5/weather"
+  city: "melbourne,AU"
+  unit: "metric"
+  accessKey: "f20cac8448abeef7a4c022a49abdb18e"
+  primary: false
+
+staleTime: "3s"
+

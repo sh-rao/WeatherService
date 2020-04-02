@@ -16,8 +16,8 @@ If the service fails to obtain weather details from the priamry source it fails 
 ### What could have been done better
 I hate to use time as an excuse but given an extra few hours or so, I would imrovise the current design and implementation with the following:
 
-- The configuration can be agnostic of the number of sources and the sources can be specifed in an array without having to name them as primary and seconday
-- `main.go` has been kind of polluted by having to instantiate `config` and pass it to the `handler`. A better design would be implement a `config service` which can be responsible for initialising config and inject it into the `weather service`.
+- The configuration can be agnostic of the number of sources and the sources can be specifed in an array without having to name them as primary and seconday.
+- `main.go` has been kind of polluted by having to instantiate `config` and pass it to the `handler`. A better design would be implement a `config service` which can be responsible for initialising config and inject it into the `weather service`. Also an `Application Context` could have added value in defining and passing context to the services and also could have helped in customising the `http.Client` (this service uses `http.DefaultClient`).
 - API Keys and APP IDs should never be stored in config. If this was hosted in cloud(assuming AWS as the default service provider, deally as a serverless app, nonetheless if it was hosted inside an ECS container) it would be stored in secrets manager (i prefer it over system manager's parameter store) or injected as environment variable for non-cloud deplyments.
 - Separate out extracting the weather details into `WeatherDetails` struct implementation into a service and ideally that service would ensure that the response from the weather information providers/sources conform to a JSON schema. I have been reading about PACT a lot, so this would be perfect place to use PACT based contract testing.
 - I would have liked to have some integration tests to make sure that what has been sent out by the service conforms to our JSON schema and also what comes in conforms as well.
